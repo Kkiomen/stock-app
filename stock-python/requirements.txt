@@ -1,0 +1,9 @@
+ta
+yfinance
+xgboost
+pytrends
+scikit-learn
+matplotlib
+pandas
+numpy
+requests
