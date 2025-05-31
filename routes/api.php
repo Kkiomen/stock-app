@@ -17,3 +17,17 @@ Route::post('stock-api/image', [StockController::class, 'image'])
 
 Route::post('stock-api/forecast', [StockController::class, 'forecast'])
     ->name('stock-api-forecast');
+
+// Grupa tras dla analizy giełdowej
+Route::prefix('stock-analysis')->group(function () {
+
+    // Synchroniczne uruchomienie analizy
+    Route::post('/run', [StockController::class, 'runStockAnalysis']);
+
+    // Asynchroniczne uruchomienie analizy (przez Queue)
+    Route::post('/run-async', [StockController::class, 'runStockAnalysisAsync']);
+
+    // Uruchomienie przez HTTP API (jeśli Python będzie miał serwer HTTP)
+    Route::post('/run-api', [StockController::class, 'runStockAnalysisViaAPI']);
+
+});

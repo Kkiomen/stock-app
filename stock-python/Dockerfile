@@ -1,34 +1,27 @@
-#FROM python:3.10-slim
-#
-## Instalacja zależności systemowych
-#RUN apt-get update && \
-#    apt-get install -y cron && \
-#    apt-get clean
-#
-## Instalacja zależności Pythona
-#COPY requirements.txt ./
-#RUN pip install --no-cache-dir -r requirements.txt
-#
-## Ustawienie katalogu roboczego
-#WORKDIR /app
-#
-## Skopiowanie skryptów
-#COPY stock_model.py run-cron.sh crontab.txt ./
-#
-## Ustawienie uprawnień
-#RUN chmod +x run-cron.sh && crontab crontab.txt
-#
-## Start crona w trybie foreground
-#CMD ["cron", "-f"]
-
-
-
 FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY stock_model.py requirements.txt ./
+# Zainstaluj wymagane pakiety systemowe
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
 
+# Skopiuj pliki requirements
+COPY requirements.txt ./
+
+# Zainstaluj zależności Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "stock_model.py"]
+# Skopiuj wszystkie pliki aplikacji
+COPY . .
+
+# Utwórz katalog cache
+RUN mkdir -p /app/cache
+
+# Expose port dla FastAPI
+EXPOSE 8000
+
+# Uruchom FastAPI server
+CMD ["python", "app.py"]

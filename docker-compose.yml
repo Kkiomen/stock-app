@@ -106,12 +106,18 @@ services:
         build:
             context: ./stock-python
         image: stock-model
+        container_name: stock-python
         networks:
             - sail
         depends_on:
             - laravel.test
         volumes:
             - ./stock-python:/app
+            - stock-python-cache:/app/cache  # Cache dla Google Trends
+        environment:
+            - PYTHONUNBUFFERED=1
+            - API_BASE_URL=http://laravel.test
+        restart: unless-stopped
 networks:
     sail:
         driver: bridge
@@ -121,4 +127,6 @@ volumes:
     sail-redis:
         driver: local
     sail-rabbitmq:
+        driver: local
+    stock-python-cache:
         driver: local
