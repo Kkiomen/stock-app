@@ -11,6 +11,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+
+    Route::get('markets', [\App\Http\Controllers\MarketController::class, 'index'])->name('markets');
 });
 
 require __DIR__.'/settings.php';

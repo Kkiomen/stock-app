@@ -78,6 +78,10 @@ class StockPriceService extends AbstractService
             $stockPrice = new StockPrice();
         }
 
+        if(empty($mappedData['close'])){
+            return $stockPrice;
+        }
+
         $stockPrice->fill($mappedData);
         $stockPrice->save();
 

@@ -92,6 +92,10 @@ class StockService extends AbstractService
             }
         }
 
+        $stock->update([
+            'last_forecast_update' => now()
+        ]);
+
         return $stockForecasts;
     }
 }
