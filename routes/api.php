@@ -11,3 +11,9 @@ Route::get('/user', function (Request $request) {
 
 Route::post('stock-api', [StockController::class, 'create'])
     ->name('stock-api');
+
+Route::post('stock-api/image', [StockController::class, 'image'])
+    ->name('stock-api-image');
+
+Route::post('stock-api/forecast', [StockController::class, 'forecast'])
+    ->name('stock-api-forecast');

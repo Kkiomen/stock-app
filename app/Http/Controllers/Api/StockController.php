@@ -30,4 +30,32 @@ class StockController extends Controller
             'data' => $data
         ]);
     }
+
+    public function image(Request $request): JsonResponse
+    {
+        $data = $request->all();
+
+        // Zapis do pliku JSON
+        $filename = 'requests/' . date('Y-m-d_H-i-s') . '_image_request.json';
+        Storage::disk('local')->put($filename, json_encode($data, JSON_PRETTY_PRINT));
+
+        return response()->json([
+            'message' => 'Stock creation endpoint',
+            'data' => $data
+        ]);
+    }
+
+    public function forecast(Request $request): JsonResponse
+    {
+        $data = $request->all();
+
+        // Zapis do pliku JSON
+        $filename = 'requests/' . date('Y-m-d_H-i-s') . '_forecast_request.json';
+        Storage::disk('local')->put($filename, json_encode($data, JSON_PRETTY_PRINT));
+
+        return response()->json([
+            'message' => 'Stock creation endpoint',
+            'data' => $data
+        ]);
+    }
 }
