@@ -30,7 +30,7 @@ class MarketController extends Controller
         $stockImage = $stock->images()->where('type', 'model')->where('stock_id', $stock->id)->orderBy('date', 'desc')->first();
 
         $uuid = $stockService->getLastUuidData(1);
-        $forecast = $stock->forecasts()->where('uuid', $uuid)->orderBy('date', 'desc')->get();
+        $forecast = $stock->forecasts()->where('uuid', $uuid)->orderBy('date', 'asc')->get();
 
         return Inertia::render('markets/details', [
             'stock' => $stock,
