@@ -29,13 +29,13 @@ class MarketController extends Controller
         $stockPrices = $stock->prices()->orderBy('date', 'desc')->limit(60)->get();
         $stockImage = $stock->images()->where('type', 'model')->where('stock_id', $stock->id)->orderBy('date', 'desc')->first();
 
-        $uuid = $stockService->getLastUuidData(1);
+        $uuid = $stockService->getLastUuidData($stock->id);
         $forecast = $stock->forecasts()->where('uuid', $uuid)->orderBy('date', 'asc')->get();
 
         return Inertia::render('markets/details', [
             'stock' => $stock,
             'stockPrices' => $stockPrices,
-            'stockImage' =>  Storage::disk('public')->url('images/' .$stockImage->image),
+            'stockImage' =>  $stockImage === null ? null :Storage::disk('public')->url('images/' .$stockImage->image),
             'forecast' => $forecast
         ]);
     }

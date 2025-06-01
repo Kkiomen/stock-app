@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Stock;
 use App\Models\User;
 use App\Service\StockImageService;
 use App\Service\StockService;
@@ -111,6 +112,42 @@ class StockController extends Controller
             $client = new \GuzzleHttp\Client();
             $response = $client->post('http://stock-python:8000/analyze', [
                 'json' => $validated,
+                'timeout' => 300
+            ]);
+
+            $result = json_decode($response->getBody()->getContents(), true);
+
+            return response()->json([
+                'success' => true,
+                'data' => $result
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Stock analysis API error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Błąd podczas komunikacji z Python API',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Metoda 3: Uruchomienie przez HTTP request do Python API
+     */
+    public function runStockAnalysisViaCleanAPI(Request $request, Stock $stock)
+    {
+        try {
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post('http://stock-python:8000/analyze', [
+                'json' => [
+                    'ticker' => $stock->ticker,
+                    'trends' => $stock->trends,
+                    'start_date' => '2017-01-01',
+                    'test_size_pct' => 0.15,
+                    'forecast_days' => 20
+                ],
                 'timeout' => 300
             ]);
 

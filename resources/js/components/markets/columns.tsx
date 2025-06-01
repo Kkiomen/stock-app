@@ -26,10 +26,28 @@ export const columns: ColumnDef<Market>[] = [
     {
         accessorKey: "id",
         header: "ID",
+        cell: ({ row }) => {
+            const market = row.original
+
+            return (
+                <Link key={market.id} href={`/markets/${market.id}`}>
+                    {market.id}
+                </Link>
+            )
+        },
     },
     {
         accessorKey: "ticker",
         header: "Ticker",
+        cell: ({ row }) => {
+            const market = row.original
+
+            return (
+                <Link key={market.id} href={`/markets/${market.id}`}>
+                    {market.ticker}
+                </Link>
+            )
+        },
     },
     {
         accessorKey: "last_price_update",

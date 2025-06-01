@@ -8,6 +8,7 @@ class Stock extends Model
 {
     protected $fillable = [
         'ticker',
+        'trends',
         'name',
         'last_price_update',
         'last_image_update',

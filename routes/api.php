@@ -29,5 +29,6 @@ Route::prefix('stock-analysis')->group(function () {
 
     // Uruchomienie przez HTTP API (jeśli Python będzie miał serwer HTTP)
     Route::post('/run-api', [StockController::class, 'runStockAnalysisViaAPI']);
+    Route::post('/run-api/clear/{stock}', [StockController::class, 'runStockAnalysisViaCleanAPI']);
 
 });
