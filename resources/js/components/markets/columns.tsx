@@ -69,7 +69,7 @@ export const columns: ColumnDef<Market>[] = [
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
-                            <Link key={market.id} href="dashboard">
+                            <Link key={market.id} href={`/markets/${market.id}`} className="w-full">
                                 View market details
                             </Link>
                         </DropdownMenuItem>

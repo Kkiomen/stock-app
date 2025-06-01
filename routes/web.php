@@ -13,6 +13,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::get('markets', [\App\Http\Controllers\MarketController::class, 'index'])->name('markets');
+    Route::get('markets/{stock}', [\App\Http\Controllers\MarketController::class, 'details'])->name('markets_details');
 });
 
 require __DIR__.'/settings.php';

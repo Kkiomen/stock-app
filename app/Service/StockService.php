@@ -98,4 +98,11 @@ class StockService extends AbstractService
 
         return $stockForecasts;
     }
+
+    public function getLastUuidData(int $stockId):? string
+    {
+        return StockForecast::where('stock_id', $stockId)
+            ->orderBy('date', 'desc')
+            ->value('uuid');
+    }
 }
